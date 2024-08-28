@@ -1,14 +1,16 @@
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "../globals.css";
+import "./globals.css";
 import {
   ClerkProvider,
 } from '@clerk/nextjs'
+import Providers from '@/components/layout/providers';
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "eshop-admin-auth",
+  title: "eshop-admin",
   description: "admin dashboard",
 };
 
@@ -19,9 +21,9 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <body className={inter.className}>
-          {children}
+      <html lang="en" suppressHydrationWarning>
+        <body className={inter.className} >
+          <Providers>{children}</Providers>
         </body>
       </html>
     </ClerkProvider>

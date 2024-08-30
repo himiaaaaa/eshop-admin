@@ -6,6 +6,7 @@ import {
   ClerkProvider,
 } from '@clerk/nextjs'
 import Providers from '@/components/layout/providers';
+import {ToasterProvider} from "@/lib/ToasterProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,6 +24,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body className={inter.className} >
+          <ToasterProvider />
           <Providers>{children}</Providers>
         </body>
       </html>

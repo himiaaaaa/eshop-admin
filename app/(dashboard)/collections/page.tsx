@@ -71,7 +71,7 @@ const Collection = () => {
             </div>
           </div>
 
-          <DataTable columns={columns} data={collections} />
+          <DataTable columns={columns} data={collections} searchKey='title' />
         </div>
       </div>
     </PageContainer>

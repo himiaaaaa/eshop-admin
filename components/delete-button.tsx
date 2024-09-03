@@ -19,10 +19,11 @@ import { Button } from "./ui/button";
 import toast from "react-hot-toast";
 
 interface DeleteProps {
-  id: string
+  id: string,
+  type?: "button" | "submit" | "reset" | undefined
 }
 
-const deleteButton: React.FC<DeleteProps> = ({ id }) => {
+const deleteButton: React.FC<DeleteProps> = ({ id, type }) => {
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
@@ -50,7 +51,7 @@ const deleteButton: React.FC<DeleteProps> = ({ id }) => {
       
       <AlertDialog>
         <AlertDialogTrigger>
-          <Button>
+          <Button className="bg-red-700" type={type}>
             <Trash className="h-4 w-4" />
           </Button>
         </AlertDialogTrigger>

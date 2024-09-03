@@ -26,6 +26,7 @@ import {
   FormDescription,
 } from "@/components/ui/form";
 import ImageUpload from '@/components/image-upload'
+import DeleteButton from "@/components/delete-button";
 
 import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
@@ -36,6 +37,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import toast from "react-hot-toast";
+import { CollectionType } from "@/lib/types";
 
 const formSchema = z.object({
   title: z.string().min(2).max(20),
@@ -43,23 +45,29 @@ const formSchema = z.object({
   image: z.string(),
 });
 
+interface CollectionFormProps {
+    initialData?: CollectionType | null
+}
+
 const breadcrumbItems = [
   { title: "Dashboard", link: "/" },
   { title: "Collections", link: "/collections" },
   { title: "Edit", link: "/collections/new" },
 ];
 
-const CollectionForm = () => {
+const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-      image: "",
-    },
+    defaultValues: initialData
+        ? initialData
+        : {
+          title: "",
+          description: "",
+          image: "",
+        },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -68,14 +76,19 @@ const CollectionForm = () => {
     try {
         setLoading(true)
 
-        const res = await fetch('/api/collections', {
+        const url = initialData
+        ? `/api/collections/${initialData._id}`
+        : "/api/collections";
+
+        const res = await fetch(url, {
           method: "POST",
           body: JSON.stringify(values),
         })
 
         if (res.ok) {
           setLoading(false);
-          toast.success('Collection created');
+          toast.success(`Collection successfully ${initialData ? "updated" : "created"}`);
+          window.location.href = "/collections";
           router.push("/collections");
         }
 
@@ -110,7 +123,7 @@ const CollectionForm = () => {
                   </Button>
 
                   <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
-                    Create Collections
+                    {initialData ?  'Edit Collections' : 'Create Collections' }
                   </h1>
 
                   <div className="hidden items-center gap-2 md:ml-auto md:flex">
@@ -122,7 +135,10 @@ const CollectionForm = () => {
                     >
                       Discard
                     </Button>
-                    <Button size="sm" type="submit">Create Collections</Button>
+                    <Button size="sm" type="submit">
+                        {initialData ?  'update' : 'create' } Collections
+                    </Button>
+                        {initialData ? <DeleteButton type='button' id={initialData._id}/> : ''}
                   </div>
 
                 </div>

@@ -30,3 +30,11 @@ export interface FooterItem {
 export type MainNavItem = NavItemWithOptionalChildren;
 
 export type SidebarNavItem = NavItemWithChildren;
+
+export type CollectionType = {
+  _id: string;
+  title: string;
+  description: string;
+  image: string;
+  products: ProductType[];
+}

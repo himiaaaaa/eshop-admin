@@ -1,6 +1,10 @@
+"use client"
+
 import React, { useState, useEffect } from 'react'
 import { Breadcrumbs } from '@/components/breadcrumbs'
 import PageContainer from '@/components/layout/page-container';
+import { DataTable } from '@/components/datatable';
+import { columns } from '@/components/collections/CollectionColumns';
 
 const breadcrumbItems = [
     { title: "Dashboard", link: "/" },
@@ -29,10 +33,13 @@ const Collection = () => {
     getCollections()
   }, [])
 
+  console.log('get collections', collections)
+
   return (
     <PageContainer>
-        <div className='space-y-2'>
+        <div className='space-y-5'>
             <Breadcrumbs items={breadcrumbItems} />
+            <DataTable columns={columns} data={collections}/>
         </div>
     </PageContainer>
   )

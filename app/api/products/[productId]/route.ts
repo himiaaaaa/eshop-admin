@@ -118,11 +118,59 @@ export const POST = async (
       await updatedProduct.save();
   
       return NextResponse.json(updatedProduct, { status: 200 });
-      
+
     } catch (err) {
 
       console.log("[productId_POST_error]", err);
       return new NextResponse("Internal error", { status: 500 });
 
     }
-  };
+};
+
+export const DELETE = async (
+    req: NextRequest,
+    { params }: { params: { productId: string } }
+) => {
+    try {
+      const { userId } = auth();
+  
+      if (!userId) {
+        return new NextResponse("Unauthorized", { status: 401 });
+      }
+  
+      await connectToDB();
+  
+      const product = await Product.findById(params.productId);
+  
+      if (!product) {
+        return new NextResponse(
+          JSON.stringify({ message: "Product no found" }),
+          { status: 404 }
+        );
+      }
+  
+      await Product.findByIdAndDelete(product._id);
+  
+      // Update collections
+      await Promise.all(
+        product.collections.map((collectionId: string) =>
+          Collection.findByIdAndUpdate(collectionId, {
+            $pull: { products: product._id },
+          })
+        )
+      );
+  
+      return new NextResponse(JSON.stringify({ message: "Product successfully deleted" }), {
+        status: 200,
+      });
+    } catch (err) {
+
+      console.log("[productId_DELETE_error]", err);
+      return new NextResponse("Internal error", { status: 500 });
+
+    }
+};
+  
+export const dynamic = "force-dynamic";
+  
+  

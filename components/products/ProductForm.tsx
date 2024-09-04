@@ -40,6 +40,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import toast from "react-hot-toast";
 import { CollectionType, ProductType } from "@/lib/types";
+import Loader from "../Loader";
 
 const formSchema = z.object({
   title: z.string().min(2).max(20),
@@ -66,7 +67,7 @@ const breadcrumbItems = [
 
 const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [collections, setCollections] = useState<CollectionType[]>([]);
 
   const getCollections = async () => {
@@ -91,10 +92,19 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     getCollections();
   }, []);
 
+  console.log('initial data', initialData)
+  console.log('collections', collections)
+
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData
-        ? initialData
+        ? {
+            ...initialData,
+            collections: initialData.collections.map(
+              (collection) => collection._id
+            ),
+          }
         : {
             title: "",
             description: "",
@@ -119,8 +129,6 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
     console.log(values)
 
     try {
-        setLoading(true)
-
         const url = initialData
         ? `/api/products/${initialData._id}`
         : "/api/products";
@@ -144,7 +152,9 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
 
   };
 
-  return (
+  return loading ? (
+    <Loader />
+    ) : (
     <PageContainer>
       <div className="space-y-2">
         <Breadcrumbs items={breadcrumbItems} />
@@ -312,6 +322,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                             </FormItem>
                           )}
                         />
+                        {collections.length > 0 && (
                         <FormField
                           control={form.control}
                           name="collections"
@@ -335,6 +346,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                             </FormItem>
                           )}
                         />
+                        )}
 
                         <FormField
                           control={form.control}

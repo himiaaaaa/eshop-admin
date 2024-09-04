@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import PageContainer from "@/components/layout/page-container";
@@ -28,6 +28,7 @@ import {
 import ImageUpload from '@/components/image-upload'
 import DeleteButton from "@/components/delete-button";
 import MultiText from "@/components/multitext"
+import MultiSelect from "@/components/multiselect"
 
 import { ChevronLeft } from "lucide-react";
 import Image from "next/image";
@@ -38,7 +39,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import toast from "react-hot-toast";
-import { ProductType } from "@/lib/types";
+import { CollectionType, ProductType } from "@/lib/types";
 
 const formSchema = z.object({
   title: z.string().min(2).max(20),
@@ -66,6 +67,29 @@ const breadcrumbItems = [
 const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [collections, setCollections] = useState<CollectionType[]>([]);
+
+  const getCollections = async () => {
+    try {
+
+      const res = await fetch("/api/collections", {
+        method: "GET",
+      });
+      const data = await res.json();
+      setCollections(data);
+      setLoading(false);
+
+    } catch (err) {
+
+      console.log("[collections_GET_error]", err);
+      toast.error("Something went wrong! Please try again.");
+
+    }
+  };
+
+  useEffect(() => {
+    getCollections();
+  }, []);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -280,6 +304,29 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                                     onRemove={(tagToRemove) =>
                                         field.onChange([
                                           ...field.value.filter((tag) => tag !== tagToRemove),
+                                        ])
+                                    }
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="collections"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Collections</FormLabel>
+                              <FormControl>
+                                <MultiSelect
+                                    placeholder="Collections" 
+                                    collections={collections}
+                                    value={field.value} 
+                                    onChange={(_id) => field.onChange([...field.value, _id])}
+                                    onRemove={(idToRemove) =>
+                                        field.onChange([
+                                          ...field.value.filter((collectionId) => collectionId !== idToRemove),
                                         ])
                                     }
                                 />

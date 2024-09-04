@@ -144,7 +144,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
                     <Button size="sm" type="submit">
                         {initialData ?  'update' : 'create' } Collections
                     </Button>
-                        {initialData ? <DeleteButton type='button' id={initialData._id}/> : ''}
+                        {initialData ? <DeleteButton item="collection" type='button' id={initialData._id}/> : ''}
                   </div>
 
                 </div>

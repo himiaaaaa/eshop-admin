@@ -19,25 +19,28 @@ import { Button } from "./ui/button";
 import toast from "react-hot-toast";
 
 interface DeleteProps {
-  id: string,
+  item: string
+  id: string
   type?: "button" | "submit" | "reset" | undefined
 }
 
-const deleteButton: React.FC<DeleteProps> = ({ id, type }) => {
+const deleteButton: React.FC<DeleteProps> = ({ item, id, type }) => {
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
     try {
       setLoading(true)
 
-      const res = await fetch(`/api/collections/${id}`, {
+      const itemType = item === "product" ? "products" : "collections"
+
+      const res = await fetch(`/api/${itemType}/${id}`, {
         method: "DELETE",
       })
 
       if (res.ok) {
         setLoading(false)
-        window.location.href = (`/collections`)
-        toast.success(`collection successfully deleted`)
+        window.location.href = (`/${itemType}`)
+        toast.success(`${item} successfully deleted`)
       }
     } catch (err) {
       console.log(err)
@@ -57,10 +60,9 @@ const deleteButton: React.FC<DeleteProps> = ({ id, type }) => {
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle className="text-red-700">Are you sure to delete collection?</AlertDialogTitle>
+            <AlertDialogTitle className="text-red-700">Are you sure to delete ${item}?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              collection.
+              This action cannot be undone. This will permanently delete your ${item}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

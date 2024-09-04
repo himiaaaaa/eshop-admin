@@ -160,7 +160,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                     variant="outline"
                     size="icon"
                     className="h-7 w-7 mr-3"
-                    onClick={() => router.push("/collections")}
+                    onClick={() => router.push("/products")}
                     type="button"
                   >
                     <ChevronLeft className="h-4 w-4" />
@@ -183,7 +183,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                     <Button size="sm" type="submit">
                         {initialData ?  'update' : 'create' } Products
                     </Button>
-                        {initialData ? <DeleteButton type='button' id={initialData._id}/> : ''}
+                        {initialData ? <DeleteButton item="product" type='button' id={initialData._id}/> : ''}
                   </div>
 
                 </div>
@@ -237,7 +237,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                             <FormControl>
                                 <ImageUpload
                                    value={field.value}
-                                   onChange={(url) => field.onChange(...field.value, url)}
+                                   onChange={(url) => field.onChange([...field.value, url])}
                                    onRemove={(url) =>
                                     field.onChange([
                                       ...field.value.filter((image) => image !== url),
@@ -269,7 +269,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                           name="expense"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>Expense</FormLabel>
+                              <FormLabel>Expense($)</FormLabel>
                               <FormControl>
                                 <Input type="number" placeholder="Expense" {...field} onKeyDown={handleKeyPress}/>
                               </FormControl>
@@ -336,7 +336,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                           )}
                         />
 
-<FormField
+                        <FormField
                           control={form.control}
                           name="colors"
                           render={({ field }) => (
@@ -381,7 +381,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                             </FormItem>
                           )}
                         />
-                        
+
                       </div>
 
                       <div className="flex items-center justify-center gap-2 mt-5 md:hidden">

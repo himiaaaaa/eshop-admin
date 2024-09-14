@@ -41,8 +41,8 @@ import { CollectionType } from "@/lib/types";
 
 const formSchema = z.object({
   title: z.string().min(2).max(20),
-  subtitle: z.string().min(2).max(20),
-  description: z.string().min(2).max(500).trim(),
+  subtitle: z.string().min(2).max(50),
+  description: z.string().min(2).trim(),
   image: z.string(),
 });
 

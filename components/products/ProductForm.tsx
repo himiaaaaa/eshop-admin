@@ -43,14 +43,15 @@ import { CollectionType, ProductType } from "@/lib/types";
 import Loader from "../Loader";
 
 const formSchema = z.object({
-  title: z.string().min(2).max(20),
-  description: z.string().min(2).max(500).trim(),
+  title: z.string().min(2).max(200),
+  description: z.string().min(2).max(2000).trim(),
   media: z.array(z.string()),
   category: z.string(),
   collections: z.array(z.string()),
   tags: z.array(z.string()),
   sizes: z.array(z.string()),
   colors: z.array(z.string()),
+  flavors: z.array(z.string()),
   price: z.coerce.number().min(0.1),
   expense: z.coerce.number().min(0.1),
 });
@@ -114,6 +115,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
             tags: [],
             sizes: [],
             colors: [],
+            flavors: [],
             price: 0.1,
             expense: 0.1,
         },
@@ -362,6 +364,29 @@ const ProductForm: React.FC<ProductFormProps> = ({ initialData }) => {
                                     onRemove={(colorToRemove) =>
                                         field.onChange([
                                           ...field.value.filter((color) => color !== colorToRemove),
+                                        ])
+                                    }
+                                />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="flavors"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Flavors</FormLabel>
+                              <FormControl>
+                                <MultiText 
+                                    placeholder="Flavors" 
+                                    value={field.value} 
+                                    onChange={(flavor) => field.onChange([...field.value, flavor])}
+                                    onRemove={(flavorToRemove) =>
+                                        field.onChange([
+                                          ...field.value.filter((flavor) => flavor !== flavorToRemove),
                                         ])
                                     }
                                 />

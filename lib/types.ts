@@ -50,6 +50,7 @@ export type ProductType = {
   tags: [string];
   sizes: [string];
   colors: [string];
+  flavors: [string];
   price: number;
   expense: number;
   createdAt: Date;

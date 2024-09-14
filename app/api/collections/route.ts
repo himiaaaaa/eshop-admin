@@ -32,7 +32,7 @@ export const POST = async (req: NextRequest) => {
   
       await connectToDB()
   
-      const { title, description, image } = await req.json()
+      const { title, subtitle, description, image } = await req.json()
   
       const existingCollection = await Collection.findOne({ title })
   
@@ -48,6 +48,7 @@ export const POST = async (req: NextRequest) => {
   
       const newCollection = await Collection.create({
         title,
+        subtitle,
         description,
         image,
       })

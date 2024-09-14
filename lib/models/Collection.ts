@@ -6,13 +6,19 @@ const collectionSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  subtitle: {
+    type: String,
+  },
   description: String,
   image: {
     type: String,
     required: true,
   },
   products: [
-
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
+    }
   ],
   createdAt: {
     type: Date,

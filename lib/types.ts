@@ -34,6 +34,7 @@ export type SidebarNavItem = NavItemWithChildren;
 export type CollectionType = {
   _id: string;
   title: string;
+  subtitle: string;
   description: string;
   image: string;
   products: ProductType[];

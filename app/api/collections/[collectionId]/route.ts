@@ -45,7 +45,7 @@ export const POST = async (
         return new NextResponse("Collection no found", { status: 404 });
       }
   
-      const { title, description, image } = await req.json();
+      const { title, subtitle, description, image } = await req.json();
   
       if (!title || !image) {
         return new NextResponse("Title and image are required", { status: 400 });
@@ -53,7 +53,7 @@ export const POST = async (
   
       collection = await Collection.findByIdAndUpdate(
         params.collectionId,
-        { title, description, image },
+        { title, subtitle, description, image },
         { new: true }
       );
   

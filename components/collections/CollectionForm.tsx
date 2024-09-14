@@ -41,6 +41,7 @@ import { CollectionType } from "@/lib/types";
 
 const formSchema = z.object({
   title: z.string().min(2).max(20),
+  subtitle: z.string().min(2).max(20),
   description: z.string().min(2).max(500).trim(),
   image: z.string(),
 });
@@ -65,6 +66,7 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
         ? initialData
         : {
           title: "",
+          subtitle: "",
           description: "",
           image: "",
         },
@@ -166,6 +168,19 @@ const CollectionForm: React.FC<CollectionFormProps> = ({ initialData }) => {
                             <FormLabel>Title</FormLabel>
                             <FormControl>
                               <Input placeholder="Title" {...field} onKeyDown={handleKeyPress}/>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      <FormField
+                        control={form.control}
+                        name="subtitle"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Subtitle</FormLabel>
+                            <FormControl>
+                              <Input placeholder="Subtitle" {...field} onKeyDown={handleKeyPress}/>
                             </FormControl>
                             <FormMessage />
                           </FormItem>

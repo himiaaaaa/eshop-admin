@@ -56,3 +56,11 @@ export type ProductType = {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type OrderColumnType = {
+  _id: string;
+  customer: string;
+  products: number;
+  totalAmount: number;
+  createdAt: string;
+}

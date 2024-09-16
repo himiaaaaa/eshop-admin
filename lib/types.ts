@@ -82,3 +82,9 @@ export type OrderItemType = {
   quantity: number;
   _id: string;
 }
+
+export type CustomerType = {
+  clerkId: string;
+  name: string;
+  email: string;
+}

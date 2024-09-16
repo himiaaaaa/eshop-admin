@@ -64,3 +64,21 @@ export type OrderColumnType = {
   totalAmount: number;
   createdAt: string;
 }
+
+export type OrderType = {
+  shippingAddress: Object;
+  _id: string;
+  customerClerkId: string;
+  products: [OrderItemType]
+  shippingRate: string;
+  totalAmount: number
+}
+
+export type OrderItemType = {
+  product: ProductType;
+  color: string;
+  flavor: string;
+  size: string;
+  quantity: number;
+  _id: string;
+}

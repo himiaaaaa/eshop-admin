@@ -18,7 +18,7 @@ const Orders = () => {
 
   const breadcrumbItems = [
     { title: "Dashboard", link: "/" },
-    { title: "orders", link: "/orders" },
+    { title: "Orders", link: "/orders" },
   ];
 
   const getOrders = async () => {

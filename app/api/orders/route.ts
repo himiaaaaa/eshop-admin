@@ -20,8 +20,6 @@ export const GET = async (req: NextRequest) => {
         customer: customer.name,
         products: order.products.length,
         totalAmount: order.totalAmount,
-        productdetail: order.products,
-        customerdetail: customer,
         createdAt: format(order.createdAt, "MMM dd, yyyy")
       }
     }))

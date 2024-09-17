@@ -40,7 +40,8 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function SalesCharts() {
+export function SalesCharts({ data }: { data: any[] }) {
+  console.log('salechart', data)
   return (
     <Card>
       <CardHeader>
@@ -51,7 +52,7 @@ export function SalesCharts() {
         <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
-            data={chartData}
+            data={data}
             margin={{
               left: 12,
               right: 12,
@@ -59,7 +60,7 @@ export function SalesCharts() {
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="name"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
@@ -70,7 +71,7 @@ export function SalesCharts() {
               content={<ChartTooltipContent hideLabel />}
             />
             <Line
-              dataKey="desktop"
+              dataKey="sales"
               type="natural"
               stroke="var(--color-desktop)"
               strokeWidth={2}

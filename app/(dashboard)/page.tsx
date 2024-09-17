@@ -10,8 +10,15 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { SalesCharts }  from '@/components/charts/sales-charts'
+import { getSalesPerMonth, getTotalCustomers, getTotalSales } from "@/lib/actions/actions";
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const totalRevenue = await getTotalSales().then((data) => data.totalRevenue);
+  const totalOrders = await getTotalSales().then((data) => data.totalOrders);
+  const totalCustomers = await getTotalCustomers();
+
+  const graphData = await getSalesPerMonth();
+
   return (
     <PageContainer scrollable={true}>
       <div className="space-y-5">
@@ -45,7 +52,7 @@ export default function Dashboard() {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">$45,231.89</div>
+              <div className="text-2xl font-bold">$ {totalRevenue}</div>
               {/* <p className="text-xs text-muted-foreground">
                   +20.1% from last month
                 </p> */}
@@ -72,7 +79,7 @@ export default function Dashboard() {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+12,234</div>
+              <div className="text-2xl font-bold">+{totalOrders}</div>
               {/* <p className="text-xs text-muted-foreground">
                 +19% from last month
               </p> */}
@@ -100,7 +107,7 @@ export default function Dashboard() {
               </svg>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">+2350</div>
+              <div className="text-2xl font-bold">+{totalCustomers}</div>
               {/* <p className="text-xs text-muted-foreground">
                 +180.1% from last month
               </p> */}
@@ -110,7 +117,7 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7">
             <div className="col-span-7">
-                <SalesCharts />
+                <SalesCharts data={graphData}/>
             </div>
           
           {/* <Card className="col-span-4 md:col-span-3">

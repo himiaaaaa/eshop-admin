@@ -11,7 +11,7 @@ export const GET = async (
     try {
         await connectToDB()
 
-        const collection = await await Collection.findById(params.collectionId)
+        const collection = await await Collection.findById(params.collectionId).populate({ path: "products", model: Product });
 
         if (!collection) {
             return new NextResponse(
@@ -99,3 +99,4 @@ export const DELETE = async (
     }
   };
 
+  export const dynamic = "force-dynamic";

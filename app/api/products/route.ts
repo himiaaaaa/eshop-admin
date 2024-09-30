@@ -11,7 +11,12 @@ export const GET = async (req: NextRequest) => {
       const products = await Product.find().sort({ createdAt: "desc" })
          .populate({ path: "collections", model: Collection });
   
-      return NextResponse.json(products, { status: 200 });
+      return NextResponse.json(products, { status: 200,
+        headers: {
+          "Access-Control-Allow-Origin": `${process.env.ECOMMERCE_STORE_URL}`,
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },  });
 
     } catch (err) {
 
@@ -88,3 +93,5 @@ export const POST = async (req: NextRequest) => {
       
     }
   };
+
+  export const dynamic = "force-dynamic";

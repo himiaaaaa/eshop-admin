@@ -10,7 +10,7 @@ interface MultiTextProps {
   onRemove: (value: string) => void;
 }
 
-const multitext: React.FC<MultiTextProps> = ({
+const MultiText: React.FC<MultiTextProps> = ({
   placeholder,
   value,
   onChange,
@@ -55,4 +55,4 @@ const multitext: React.FC<MultiTextProps> = ({
   );
 };
 
-export default multitext;
+export default MultiText;

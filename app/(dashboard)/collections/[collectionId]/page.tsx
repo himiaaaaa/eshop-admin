@@ -5,7 +5,7 @@ import { useEffect, useState } from "react"
 import Loader from "@/components/Loader"
 import CollectionForm from "@/components/collections/CollectionForm"
 
-const detailCollection = ({ params }: { params: { collectionId: string }}) => {
+const DetailCollection = ({ params }: { params: { collectionId: string }}) => {
     const [loading, setLoading] = useState(true)
     const [collectionDetails, setCollectionDetails] = useState<CollectionType | null>(null)
 
@@ -36,4 +36,4 @@ const detailCollection = ({ params }: { params: { collectionId: string }}) => {
   )
 }
 
-export default detailCollection
+export default DetailCollection

@@ -23,7 +23,7 @@ interface MultiSelectProps {
   onRemove: (value: string) => void;
 }
 
-const multiselect: React.FC<MultiSelectProps> = ({
+const MultiSelect: React.FC<MultiSelectProps> = ({
   placeholder,
   collections,
   value,
@@ -103,4 +103,4 @@ const multiselect: React.FC<MultiSelectProps> = ({
   );
 };
 
-export default multiselect;
+export default MultiSelect;

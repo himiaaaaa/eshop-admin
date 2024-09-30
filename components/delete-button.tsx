@@ -24,7 +24,7 @@ interface DeleteProps {
   type?: "button" | "submit" | "reset" | undefined
 }
 
-const deleteButton: React.FC<DeleteProps> = ({ item, id, type }) => {
+const DeleteButton: React.FC<DeleteProps> = ({ item, id, type }) => {
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
@@ -81,4 +81,4 @@ const deleteButton: React.FC<DeleteProps> = ({ item, id, type }) => {
   );
 };
 
-export default deleteButton;
+export default DeleteButton;

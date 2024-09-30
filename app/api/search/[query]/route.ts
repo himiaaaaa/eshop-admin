@@ -15,7 +15,7 @@ export const GET = async (req: NextRequest, { params }: { params: { query: strin
     })
 
     return NextResponse.json(searchedProducts, { status: 200 })
-    
+
   } catch (err) {
 
     console.log("[search_GET_error]", err)
@@ -23,4 +23,6 @@ export const GET = async (req: NextRequest, { params }: { params: { query: strin
 
   }
 }
+
+export const dynamic = "force-dynamic";
 
